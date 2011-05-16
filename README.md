@@ -45,6 +45,9 @@ module DanceMatcher
 end
 
 REnvy::Should.add DanceMatcher
+
+# Then in your tests, use:
+dancer.should.boogie_all_night!
 ```
 
 (You may also use `REnvy::Should::Be.add` to restrict it to the `.should.be` 
