@@ -1,4 +1,4 @@
-v0.2.0 - May 17, 2011
+v0.2.1 - May 17, 2011
 ---------------------
 
 Massive API overhaul to match Test::Spec API.
