@@ -23,7 +23,7 @@ require 'test/unit'
 #   should_not.raise { puts "hi" }
 #
 module REnvy
-  VERSION = "0.1.1"
+  VERSION = "0.1.2"
 
   def self.version
     VERSION
