@@ -46,7 +46,7 @@ module REnvy
       @neg  = neg
     end
 
-    def be() self; end
+    def be(right=nil) self.same(right)  if right; self; end
     def a()  self; end
     def an() self; end
 

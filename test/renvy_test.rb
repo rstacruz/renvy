@@ -54,8 +54,9 @@ class REnvyTest < Test::Unit::TestCase
 
     a = Object.new
     b = a
-    a.should.be.equal?(b)
-    a.should_not.be.equal?(Object.new)
+    a.should.be.equal(b)
+    a.should.be(b)
+    a.should_not.be.equal(Object.new)
 
     Math::PI.should.be.close(22.0/7, 0.1)
 
@@ -64,6 +65,14 @@ class REnvyTest < Test::Unit::TestCase
 
     Foo.new.should.not.get_false
     Foo.new.should.get_true
+  end
+
+  def test_should_be
+    a = Object.new
+    b = a
+
+    expects(:assert_same).with(a, b)
+    a.should.be(b)
   end
 
   def test_include
