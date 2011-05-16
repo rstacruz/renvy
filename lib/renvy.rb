@@ -32,10 +32,11 @@ module REnvy
   class Should
     attr_reader :left
 
-    def self.init(test)
+    def self.init(test) # :nodoc:
       @@test = test
     end
 
+    # Includes a module to extend .should with more matchers.
     def self.add(extension)
       self.send :include, extension
     end
@@ -45,40 +46,32 @@ module REnvy
       @neg  = neg
     end
 
-    def negative?
-      @neg
+    def negative?()           @neg; end
+    def positive?()           !@neg; end
+    def test()                @@test; end
+    def ==(right)             assert_or_refute :equal, right, left; end
+    def !=(right)             assert_or_refute_not :equal, right, left; end
+    def =~(right)             assert_or_refute :match, right, left; end
+    def >(right)              assert_or_refute :operator, :>,  right, left; end
+    def <(right)              assert_or_refute :operator, :<,  right, left; end
+    def >=(right)             assert_or_refute :operator, :>=, right, left; end
+    def <=(right)             assert_or_refute :operator, :<=, right, left; end
+    def include?(right)       assert_or_refute :includes, left, right; end
+    def instance_of?(right)   assert_or_refute :instance_of, right, left; end
+    def kind_of?(right)       assert_or_refute :kind_of, right, left; end
+    def nil?()                assert_or_refute :nil, left; end
+    def equal?(right)         assert_or_refute :same, right, left; end
+    def empty?()              assert_or_refute :empty, left; end
+
+    def in_delta?(right, d=0.001)   assert_or_refute :in_delta, right, left, d; end
+    def in_epsilon?(right, d=0.001) assert_or_refute :in_epsilon, right, left, d; end
+
+    def assert_or_refute(what, *args)
+      test.send (positive? ? :"assert_#{what}" : :"refute_#{what}"), *args
     end
 
-    def positive?
-      !@neg
-    end
-
-    def test
-      @@test
-    end
-
-    def ==(right)
-      if positive?
-        test.send :assert_equal, right, left
-      else
-        test.send :assert_not_equal, right, left
-      end
-    end
-
-    def !=(right)
-      if positive?
-        test.send :assert_not_equal, right, left
-      else
-        test.send :assert_equal, right, left
-      end
-    end
-
-    def =~(right)
-      if positive?
-        test.send :assert_match, right, left
-      else
-        test.send :assert, ! (left =~ right)
-      end
+    def assert_or_refute_not(what, *args)
+      test.send (negative? ? :"assert_#{what}" : :"refute_#{what}"), *args
     end
 
     def be
@@ -105,19 +98,11 @@ module REnvy
 
   class Should::Be < Should
     def true!
-      if positive?
-        test.send :assert, left
-      else
-        test.send :assert, ! left
-      end
+      test.send :assert, (positive? ? left : !left)
     end
 
     def false!
-      if positive?
-        test.send :assert, ! left
-      else
-        test.send :assert, left
-      end
+      test.send :assert, (negative? ? left : !left)
     end
   end
 end

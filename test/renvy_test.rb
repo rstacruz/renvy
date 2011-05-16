@@ -26,5 +26,22 @@ class REnvyTest < Test::Unit::TestCase
 
     should_not.raise { 2 + 2 }
     should.raise(ZeroDivisionError) { 2 / 0 }
+
+    [].should.be.empty?
+    [].should.empty?
+
+    [1].should_not.be.empty?
+    [1].should.include?(1)
+
+    Object.new.should.respond_to?(:freeze)
+    Object.new.should.be.kind_of?(Object)
+    Object.new.should.be.instance_of?(Object)
+
+    a = Object.new
+    b = a
+    a.should.be.equal?(b)
+    a.should_not.be.equal?(Object.new)
+
+    Math::PI.should.be.in_delta?(22.0/7, 0.1)
   end
 end
