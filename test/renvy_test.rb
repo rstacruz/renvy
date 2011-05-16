@@ -33,6 +33,13 @@ class REnvyTest < Test::Unit::TestCase
     [1].should_not.be.empty?
     [1].should.include?(1)
 
+    2.should < 3
+    1.should < 2
+    2.should <= 2
+    2.should <= 4
+    4.should >= 4
+    4.should >= 3
+
     Object.new.should.respond_to?(:freeze)
     Object.new.should.be.kind_of?(Object)
     Object.new.should.be.instance_of?(Object)

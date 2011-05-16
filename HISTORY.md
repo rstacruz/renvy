@@ -1,3 +1,9 @@
+v0.1.3 - May 17, 2011
+---------------------
+
+### Fixed:
+  * Fixed operations (`a.should < b` and so on)
+
 v0.1.2 - May 17, 2011
 ---------------------
 

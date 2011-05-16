@@ -23,7 +23,7 @@ require 'test/unit'
 #   should_not.raise { puts "hi" }
 #
 module REnvy
-  VERSION = "0.1.2"
+  VERSION = "0.1.3"
 
   def self.version
     VERSION
@@ -52,10 +52,10 @@ module REnvy
     def ==(right)             assert_or_refute :equal, right, left; end
     def !=(right)             assert_or_refute_not :equal, right, left; end
     def =~(right)             assert_or_refute :match, right, left; end
-    def >(right)              assert_or_refute :operator, :>,  right, left; end
-    def <(right)              assert_or_refute :operator, :<,  right, left; end
-    def >=(right)             assert_or_refute :operator, :>=, right, left; end
-    def <=(right)             assert_or_refute :operator, :<=, right, left; end
+    def >(right)              assert_or_refute :operator, left, :>,  right; end
+    def <(right)              assert_or_refute :operator, left, :<,  right; end
+    def >=(right)             assert_or_refute :operator, left, :>=, right; end
+    def <=(right)             assert_or_refute :operator, left, :<=, right; end
     def include?(right)       assert_or_refute :includes, left, right; end
     def instance_of?(right)   assert_or_refute :instance_of, right, left; end
     def kind_of?(right)       assert_or_refute :kind_of, right, left; end
