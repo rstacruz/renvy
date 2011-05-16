@@ -23,9 +23,10 @@ obj.should.nil                     # => assert_nil obj
 obj.should.be.nil                  # => assert_nil obj
 obj.should.be.a.nil                # => assert_nil obj
 
-# You can also use should_not:
+# You can also use should_not, or should.not:
 obj.should_not == 3
-obj.should_not.be.nil?
+obj.should.not == 3
+obj.should_not.be.nil
 
 # Anything else will pass through with a ?:
 obj.should.be.good_looking         # => assert obj.good_looking?
