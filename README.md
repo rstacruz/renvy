@@ -56,7 +56,7 @@ dancer.should.boogie_all_night!
 (You may also use `REnvy::Should::Be.add` to restrict it to the `.should.be` 
  context.)
 
-### REnvy vs. Test::Spec
+## REnvy vs. Test::Spec
 
 [Test-Spec](http://test-spec.rubyforge.org/test-spec/) accomplishes roughly 
 the same thing as REnvy, but:
