@@ -23,12 +23,12 @@ obj.should.nil?                    # => assert obj.nil?
 obj.should.be.nil?                 # => assert obj.nil?
 obj.should.respond_to?(:freeze)    # => assert obj.respond_to?(:freeze)
 
-# You can also use shouldnt:
-obj.shouldnt == 3
-obj.shouldnt.be.nil?
+# You can also use should_not:
+obj.should_not == 3
+obj.should_not.be.nil?
 
 should.raise(Error) { lol }
-shouldnt.raise { puts "hi" }
+should_not.raise { puts "hi" }
 ```
 
 ### Extending

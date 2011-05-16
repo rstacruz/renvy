@@ -15,15 +15,15 @@ require 'test/unit'
 #   obj.should.be.nil?  # same as: assert obj.nil?
 #   obj.should.respond_to?(:freeze)
 #
-#   # You can also use shouldnt:
-#   obj.shouldnt == 3
-#   obj.shouldnt.be.nil?
+#   # You can also use should_not:
+#   obj.should_not == 3
+#   obj.should_not.be.nil?
 #
 #   should.raise(Error) { lol }
-#   shouldnt.raise { puts "hi" }
+#   should_not.raise { puts "hi" }
 #
 module REnvy
-  VERSION = "0.1.0"
+  VERSION = "0.1.1"
 
   def self.version
     VERSION
@@ -127,7 +127,7 @@ class Object
     REnvy::Should.new(self)
   end
 
-  def shouldnt
+  def should_not
     REnvy::Should.new(self, true)
   end
 end
