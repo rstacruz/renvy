@@ -11,13 +11,6 @@ class REnvyTest < Test::Unit::TestCase
     "hi".should =~ /hi/
     "hi".should_not =~ /HI/
 
-    true.should.be.true!
-    "ye".should.be.true!
-    true.should_not.be.false!
-
-    false.should.be.false!
-    false.should_not.be.true!
-
     @foo.should.be.nil?
     1000.should_not.be.nil?
 

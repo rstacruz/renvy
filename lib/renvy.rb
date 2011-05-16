@@ -74,9 +74,9 @@ module REnvy
       test.send (negative? ? :"assert_#{what}" : :"refute_#{what}"), *args
     end
 
-    def be
-      Be.new(left, @neg)
-    end
+    def be() self; end
+    def a()  self; end
+    def an() self; end
 
     def raise(ex=StandardError, &blk)
       if positive?
@@ -93,16 +93,6 @@ module REnvy
       else
         @test.send :assert, ! result
       end
-    end
-  end
-
-  class Should::Be < Should
-    def true!
-      test.send :assert, (positive? ? left : !left)
-    end
-
-    def false!
-      test.send :assert, (negative? ? left : !left)
     end
   end
 end
