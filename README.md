@@ -31,9 +31,10 @@ should.raise(Error) { lol }
 should_not.raise { puts "hi" }
 ```
 
-### Extending
+## Extending
 
-Create your new matcher in a module, then use `REnvy::Should.add`.
+Need to create your own matchers? Create your new matcher in a module, then 
+use `REnvy::Should.add`.
 
 ```ruby
 module DanceMatcher
@@ -54,3 +55,17 @@ dancer.should.boogie_all_night!
 
 (You may also use `REnvy::Should::Be.add` to restrict it to the `.should.be` 
  context.)
+
+### REnvy vs. Test::Spec
+
+[Test-Spec](http://test-spec.rubyforge.org/test-spec/) accomplishes roughly 
+the same thing as REnvy, but:
+
+ * REnvy does it with lean <4kb code.
+
+ * REnvy can play alongside with other Test::Unit wrappers. In fact, is made 
+to be used with gems like Contest, Shoulda, and other similar tools.
+
+ * REnvy does not provide contexts or 'should'-like syntax like Test::Spec 
+ does.  For that, I suggest using REnvy alongside 
+ [Contest](http://github.com/citrusbyte/contest).
