@@ -13,7 +13,7 @@ Then you may use it as so:
 
 ```ruby
 obj.should == 2                    # => assert_equal 2, obj
-obj.should ~= /regex/              # => assert_match /regex/, obj
+obj.should =~ /regex/              # => assert_match /regex/, obj
 obj.should != 3                    # => assert_not_equal 3, obj
 obj.should.be.true!                # => assert obj
 obj.should.be.false!
