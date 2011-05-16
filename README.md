@@ -38,6 +38,7 @@ should_not.raise { puts "hi" }
 
 These are based from Test::Spec.
 
+| Test::Unit                  | REnvy                                 |
 |-----------------------------|---------------------------------------|
 | assert_equal                | should.equal, should ==               |
 | assert_not_equal            | should.not.equal, should.not ==       |
