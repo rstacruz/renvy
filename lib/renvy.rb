@@ -23,7 +23,7 @@ require 'test/unit'
 #   should_not.raise { puts "hi" }
 #
 module REnvy
-  VERSION = "0.1.3"
+  VERSION = "0.2.0"
 
   def self.version
     VERSION
@@ -46,9 +46,15 @@ module REnvy
       @neg  = neg
     end
 
-    def negative?()           @neg; end
-    def positive?()           !@neg; end
-    def test()                @@test; end
+    def be() self; end
+    def a()  self; end
+    def an() self; end
+
+    def negative?() @neg; end
+    def positive?() !@neg; end
+    def test()      @@test; end
+    def not()       @neg = true; self; end
+
     def ==(right)             assert_or_refute :equal, right, left; end
     def !=(right)             assert_or_refute_not :equal, right, left; end
     def =~(right)             assert_or_refute :match, right, left; end
@@ -56,27 +62,36 @@ module REnvy
     def <(right)              assert_or_refute :operator, left, :<,  right; end
     def >=(right)             assert_or_refute :operator, left, :>=, right; end
     def <=(right)             assert_or_refute :operator, left, :<=, right; end
-    def include?(right)       assert_or_refute :includes, left, right; end
-    def instance_of?(right)   assert_or_refute :instance_of, right, left; end
-    def kind_of?(right)       assert_or_refute :kind_of, right, left; end
-    def nil?()                assert_or_refute :nil, left; end
-    def equal?(right)         assert_or_refute :same, right, left; end
-    def empty?()              assert_or_refute :empty, left; end
+    def include(right)        assert_or_refute :includes, left, right; end
+    def instance_of(right)    assert_or_refute :instance_of, right, left; end
+    def kind_of(right)        assert_or_refute :kind_of, right, left; end
+    def nil()                 assert_or_refute :nil, left; end
+    def same(right)           assert_or_refute :same, right, left; end
+    def respond_to(right)     assert_or_refute :respond_to, left, right; end
+    def empty()               assert_or_refute :empty, left; end
+    def satisfy(&blk)         assert_or_refute :block, &blk; end
 
-    def in_delta?(right, d=0.001)   assert_or_refute :in_delta, right, left, d; end
-    def in_epsilon?(right, d=0.001) assert_or_refute :in_epsilon, right, left, d; end
+    def match(right)          self =~ right; end
+    def equal(right)          self == right; end
 
-    def assert_or_refute(what, *args)
-      test.send (positive? ? :"assert_#{what}" : :"refute_#{what}"), *args
+    def close(right, d=0.001)       assert_or_refute :in_delta, right, left, d; end
+    def in_epsilon(right, d=0.001)  assert_or_refute :in_epsilon, right, left, d; end
+
+    def assert_or_refute(what, *args, &blk)
+      test.send (positive? ? :"assert_#{what}" : :"refute_#{what}"), *args, &blk
     end
 
     def assert_or_refute_not(what, *args)
       test.send (negative? ? :"assert_#{what}" : :"refute_#{what}"), *args
     end
 
-    def be() self; end
-    def a()  self; end
-    def an() self; end
+    def throw(what=nil, &blk)
+      if positive?
+        test.send :assert_throws, what, &blk
+      else
+        test.send :assert_nothing_thrown, &blk
+      end
+    end
 
     def raise(ex=StandardError, &blk)
       if positive?
@@ -87,11 +102,11 @@ module REnvy
     end
 
     def method_missing(meth, *args, &blk)
-      result = left.send(meth, *args, &blk)
+      result = left.send(:"#{meth}?", *args, &blk)
       if positive?
-        @test.send :assert, result
+        test.send :assert, result
       else
-        @test.send :assert, ! result
+        test.send :assert, ! result
       end
     end
   end

@@ -15,23 +15,46 @@ Then you may use it as so:
 obj.should == 2                    # => assert_equal 2, obj
 obj.should =~ /regex/              # => assert_match /regex/, obj
 obj.should != 3                    # => assert_not_equal 3, obj
-obj.should.be.true!                # => assert obj
-obj.should.be.false!
+obj.should.nil                     # => assert_nil obj
+obj.should.respond_to(:freeze)     # => assert_respond_to obj, :freeze 
 
-# Anything else will just pass
-# thru (.be, .a and .an is optional):
-
-obj.should.nil?                    # => assert obj.nil?
-obj.should.be.nil?                 # => assert obj.nil?
-obj.should.respond_to?(:freeze)    # => assert obj.respond_to?(:freeze)
+# Note that .be, .a and .an are optional.
+obj.should.nil                     # => assert_nil obj
+obj.should.be.nil                  # => assert_nil obj
+obj.should.be.a.nil                # => assert_nil obj
 
 # You can also use should_not:
 obj.should_not == 3
 obj.should_not.be.nil?
 
+# Anything else will pass through with a ?:
+obj.should.be.good_looking         # => assert obj.good_looking?
+
 should.raise(Error) { lol }
 should_not.raise { puts "hi" }
 ```
+
+## Wrapped assertions
+
+These are based from Test::Spec.
+
+| assert_equal                | should.equal, should ==               |
+| assert_not_equal            | should.not.equal, should.not ==       |
+| assert_same                 | should.be                             |
+| assert_not_same             | should.not.be                         |
+| assert_nil                  | should.be.nil                         |
+| assert_not_nil              | should.not.be.nil                     |
+| assert_in_delta             | should.be.close                       |
+| assert_match                | should.match, should =~               |
+| assert_no_match             | should.not.match, should.not =~       |
+| assert_instance_of          | should.be.an.instance_of              |
+| assert_kind_of              | should.be.a.kind_of                   |
+| assert_respond_to           | should.respond_to                     |
+| assert_raise                | should.raise                          |
+| assert_nothing_raised       | should.not.raise                      |
+| assert_throws               | should.throw                          |
+| assert_nothing_thrown       | should.not.throw                      |
+| assert_block                | should.satisfy                        |
 
 ## Extending
 
