@@ -1,7 +1,9 @@
 # REnvy
 #### Rspec-like matching for Test::Unit.
 
-REnvy lets you use a syntax similar to RSpec on your Test::Unit tests.
+REnvy lets you use a syntax similar to RSpec on your Test::Unit tests. It 
+monkey-patches Object to translate RSpec-like sugar into plain Test::Unit 
+`assert` matchers.
 
 ```
 $ gem install renvy
@@ -10,16 +12,16 @@ $ gem install renvy
 Then you may use it as so:
 
 ```ruby
-obj.should == 2
-obj.should ~= /regex/
-obj.should != 3
-obj.should.be.true!
+obj.should == 2                    # => assert_equal 2, obj
+obj.should ~= /regex/              # => assert_match /regex/, obj
+obj.should != 3                    # => assert_not_equal 3, obj
+obj.should.be.true!                # => assert obj
 obj.should.be.false!
 
-# Anything else will just pass thru:
-obj.should.nil?     # same as: assert obj.nil?
-obj.should.be.nil?  # same as: assert obj.nil?
-obj.should.respond_to?(:freeze)
+# Anything else will just pass thru (.be is optional):
+obj.should.nil?                    # => assert obj.nil?
+obj.should.be.nil?                 # => assert obj.nil?
+obj.should.respond_to?(:freeze)    # => assert obj.respond_to?(:freeze)
 
 # You can also use shouldnt:
 obj.shouldnt == 3
