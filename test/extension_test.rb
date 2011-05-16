@@ -25,7 +25,7 @@ class ExtensionTest < Test::Unit::TestCase
     a = %w(a b c)
     b = %w(b c A)
 
-    a.shouldnt.be.like b
+    a.should_not.be.like b
   end
 
   def test_extension_3
