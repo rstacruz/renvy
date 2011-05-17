@@ -71,18 +71,32 @@ class REnvyTest < Test::Unit::TestCase
     a = Object.new
     b = a
 
-    expects(:assert_same).with(a, b)
+    expects(:assert_same).with(a, b, nil)
     a.should.be(b)
   end
 
   def test_include
-    expects(:assert_includes).with([], 2)
+    expects(:assert_includes).with([], 2, nil)
     [].should.include 2
   end
 
   def test_include_not
-    expects(:refute_includes).with([], 2)
+    expects(:refute_includes).with([], 2, nil)
     [].should.not.include 2
+  end
+
+  def test_message
+    expects(:assert_equal).with(4, 3, 'lol')
+    3.should.blaming('lol') == 4
+  end
+
+  def test_message_2
+    object = Object.new
+
+    expects(:assert).with('grape', 'lol')
+    object.expects(:boo?).returns('grape')
+
+    object.should.blaming('lol').boo
   end
 
   def test_assert_block

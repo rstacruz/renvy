@@ -23,7 +23,7 @@ require 'test/unit'
 #   should_not.raise { puts "hi" }
 #
 module REnvy
-  VERSION = "0.2.1"
+  VERSION = "0.2.2"
 
   def self.version
     VERSION
@@ -31,6 +31,7 @@ module REnvy
 
   class Should
     attr_reader :left
+    attr_reader :msg
 
     def self.init(test) # :nodoc:
       @@test = test
@@ -55,6 +56,9 @@ module REnvy
     def test()      @@test; end
     def not()       @neg = true; self; end
 
+    def blaming(msg);   @msg = msg; self; end
+    def messaging(msg); @msg = msg; self; end
+
     def ==(right)             assert_or_refute :equal, right, left; end
     def !=(right)             assert_or_refute_not :equal, right, left; end
     def =~(right)             assert_or_refute :match, right, left; end
@@ -78,36 +82,37 @@ module REnvy
     def in_epsilon(right, d=0.001)  assert_or_refute :in_epsilon, right, left, d; end
 
     def assert_or_refute(what, *args, &blk)
-      test.send (positive? ? :"assert_#{what}" : :"refute_#{what}"), *args, &blk
+      test.send (positive? ? :"assert_#{what}" : :"refute_#{what}"), *args, msg, &blk
     end
 
     def assert_or_refute_not(what, *args)
-      test.send (negative? ? :"assert_#{what}" : :"refute_#{what}"), *args
+      test.send (negative? ? :"assert_#{what}" : :"refute_#{what}"), *args, msg
     end
 
     def throw(what=nil, &blk)
       if positive?
-        test.send :assert_throws, what, &blk
+        test.send :assert_throws, what, msg, &blk
       else
-        test.send :assert_nothing_thrown, &blk
+        test.send :assert_nothing_thrown, msg, &blk
       end
     end
 
     def raise(ex=StandardError, &blk)
       if positive?
-        test.send :assert_raises, ex, &blk
+        test.send :assert_raises, ex, msg, &blk
       else
-        test.send :assert_nothing_raised, &blk
+        test.send :assert_nothing_raised, msg, &blk
       end
     end
 
     def method_missing(meth, *args, &blk)
       result = left.send(:"#{meth}?", *args, &blk)
-      if positive?
-        test.send :assert, result
-      else
-        test.send :assert, ! result
-      end
+      method = positive? ? :assert : :refute
+
+      args = [result]
+      args << msg  if msg
+
+      test.send method, *args
     end
   end
 end

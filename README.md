@@ -33,6 +33,9 @@ obj.should.be.good_looking         # => assert obj.good_looking?
 
 should.raise(Error) { lol }
 should_not.raise { puts "hi" }
+
+# You may add messages to your asserts with #blaming or #messaging.
+(2 + 2).should.blaming("weird math") == 4
 ```
 
 ## Wrapped assertions
