@@ -10,5 +10,6 @@ Gem::Specification.new do |s|
   s.files = `git ls-files`.strip.split("\n")
 
   s.add_dependency "test-unit"
+  s.add_development_dependency "contest"
   s.add_development_dependency "mocha"
 end

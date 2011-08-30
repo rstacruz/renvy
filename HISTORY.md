@@ -1,3 +1,10 @@
+v0.3.0 - Aug 31, 2011
+---------------------
+
+### Changed:
+  * Account for assert_includes missing in old Test::Unit versions.
+  * Use a new way of hooking onto Test::Unit should now not break setup blocks.
+
 v0.2.3 - Jul 27, 2011
 ---------------------
 
