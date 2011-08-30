@@ -23,11 +23,7 @@ require 'test/unit'
 #   should_not.raise { puts "hi" }
 #
 module REnvy
-  VERSION = "0.2.3"
-
-  def self.version
-    VERSION
-  end
+  require File.expand_path('../renvy/version', __FILE__)
 
   class Should
     attr_reader :left
@@ -66,7 +62,7 @@ module REnvy
     def <(right)              assert_or_refute :operator, left, :<,  right; end
     def >=(right)             assert_or_refute :operator, left, :>=, right; end
     def <=(right)             assert_or_refute :operator, left, :<=, right; end
-    def include(right)        assert_or_refute :include, left, right; end
+    def include(right)        assert_or_refute :includes, left, right; end
     def instance_of(right)    assert_or_refute :instance_of, right, left; end
     def kind_of(right)        assert_or_refute :kind_of, right, left; end
     def nil()                 assert_or_refute :nil, left; end
@@ -132,5 +128,14 @@ class Test::Unit::TestCase
   def setup(&blk)
     old_setup &blk
     REnvy::Should.init self
+  end
+end
+
+# Workaround for assert_includes missing in old versions
+unless Test::Unit::TestCase.instance_methods.include?(:assert_includes)
+  Test::Unit::TestCase.class_eval do
+    def assert_includes(haystack, needle, message=nil)
+      assert haystack.include?(needle), (message || "Expected '#{haystack}' to include '#{needle}'")
+    end
   end
 end

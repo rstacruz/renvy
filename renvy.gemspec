@@ -1,4 +1,4 @@
-require "./lib/renvy"
+require "./lib/renvy/version"
 Gem::Specification.new do |s|
   s.name = "renvy"
   s.version = REnvy.version
@@ -7,7 +7,8 @@ Gem::Specification.new do |s|
   s.authors = ["Rico Sta. Cruz"]
   s.email = ["rico@sinefunc.com"]
   s.homepage = "http://github.com/rstacruz/renvy"
-  s.files = Dir["{bin,lib,test}/**/*", "*.md", "Rakefile"].reject { |f| File.directory?(f) }
+  s.files = `git ls-files`.strip.split("\n")
 
   s.add_dependency "test-unit"
+  s.add_development_dependency "mocha"
 end
