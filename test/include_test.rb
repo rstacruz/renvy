@@ -7,7 +7,7 @@ class IncludeTest < Test::Unit::TestCase
   end
 
   def test_should_include_fail
-    self.expects(:assert).with { |a, b| a == false && b =~ /Expected/ }
+    self.expects(:assert).with { |a, b| a == false && b.call =~ /Expected/ }
     "axxc".should.include "b"
   end
 end

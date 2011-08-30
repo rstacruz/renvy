@@ -124,10 +124,10 @@ class Object
 end
 
 class Test::Unit::TestCase
-  alias old_setup setup
-  def setup(&blk)
-    old_setup &blk
+  alias run_before_renvy run
+  def run(*a, &blk)
     REnvy::Should.init self
+    run_before_renvy *a, &blk
   end
 end
 
@@ -135,7 +135,7 @@ end
 unless Test::Unit::TestCase.instance_methods.include?(:assert_includes)
   Test::Unit::TestCase.class_eval do
     def assert_includes(haystack, needle, message=nil)
-      assert haystack.include?(needle), (message || "Expected '#{haystack}' to include '#{needle}'")
+      assert(haystack.include?(needle)) { message || "Expected '#{haystack}' to include '#{needle}'" }
     end
   end
 end
